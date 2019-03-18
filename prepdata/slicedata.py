@@ -35,7 +35,7 @@ def slice(inf, df):
 
 	alli = 0
 	for (pt, orif, maskf, grp) in tqdm.tqdm(allfiles):
-	  stride = 2
+	  stride = 8
 	  if grp == "valid":
 	    stride = slicewidth
 	  ori = np.array(Image.open(df + "/" + orif))
