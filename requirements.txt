@@ -1,0 +1,8 @@
+keras==2.2.0
+tensorflow==1.8.0
+gputil
+numpy
+tqdm
+pillow
+altair
+colour
