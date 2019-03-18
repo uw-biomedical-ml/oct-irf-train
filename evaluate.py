@@ -41,7 +41,7 @@ if len(imgs) == 0:
     print("ERROR: %s has no images!" % indir)
     sys.exit(-1)
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "3"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 model = deeplearning.unet.get_unet()
 
 model.load_weights("runs/weights.hdf5", by_name=True)

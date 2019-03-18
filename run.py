@@ -156,15 +156,12 @@ json.dump(opts, open("runs/options.json", "w"))
 print("="*30)
 print("Starting slicing of data and packing")
 
-if False:
-  import prepdata.slicedata, prepdata.packdata
-  prepdata.slicedata.slice(csvfile, pdir)
-  prepdata.packdata.packdata(csvfile)
+import prepdata.slicedata, prepdata.packdata
+prepdata.slicedata.slice(csvfile, pdir)
+prepdata.packdata.packdata(csvfile)
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-#jproc = subprocess.Popen('deeplearning/train.py', stdout=subprocess.PIPE, cwd="deeplearning/",  env=env)
-#proc = subprocess.Popen('ls', shell=True, stdout=subprocess.PIPE, cwd="deeplearning/",  env=env)
 from deeplearning.train import train
-train(5)
+train(10)
 from deeplearning.render import render
 render("runs/history.txt", "runs/learning.html")
