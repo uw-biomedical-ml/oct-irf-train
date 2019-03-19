@@ -25,6 +25,10 @@ Then you would run the command `./run.py data segmentations.csv`
 
 This will check your environment and install any packages that are missing. It will also setup the data files into two sets of images: 80% for training and 20% for validation. The files will be packaged and then stored as Numpy arrays inside `prepdata/nyparrays`. Training will beginning using transfer learning and process for 10 epochs. 
 
+The format of the images are expected to be as follows:
+- original OCT B scans = 8-bit grayscale images, ideally PNG.
+- segmentation masks = 8-bit grayscale images with 255 for the feature of interest and 0 for the background. 
+
 # Output
 
 After training is finished, there will be a folder called `run` inside the project folder. This folder will also contain the following files:
