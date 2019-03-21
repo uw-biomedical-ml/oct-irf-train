@@ -40,6 +40,10 @@ def slice(inf, df):
 	    stride = slicewidth
 	  ori = np.array(Image.open(df + "/" + orif))
 	  mask = np.array(Image.open(df + "/" + maskf))
+          if len(ori.shape) == 3:
+            ori = ori[:,:,0]
+          if len(mask.shape) == 3:
+            mask = mask[:,:,0]
 	  ym = np.argmax(np.sum(ori, axis=1))
 	  y0 = int(ym - corph / 2)
 	  y1 = int(ym + corph / 2)
