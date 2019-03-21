@@ -58,7 +58,7 @@ print("\tVerified that all images exist and that CSV layout looks reasonable")
 
 print("="*30)
 print("Verifying environment")
-os.system("pip install --user -r requirements.txt")
+#os.system("pip install --user -r requirements.txt")
 
 try:
 	import pkg_resources
