@@ -55,7 +55,7 @@ def slice(inf, df):
 	    sliori = np.zeros((corph, slicewidth), dtype="uint8")
 	    slimask = np.zeros((corph, slicewidth), dtype="uint8")
 	    sliori[0:y1-y0, :]  = ori[y0:y1, xi:xi+slicewidth]
-	    slimask[0:y1-y0, :] = 255 * mask[y0:y1, xi:xi+slicewidth]
+	    slimask[0:y1-y0, :] = mask[y0:y1, xi:xi+slicewidth]
 	    found = np.sum(slimask > 0)
 	    if found > 0 or random.random() < normalprob:
 	      g2 = "norm"
