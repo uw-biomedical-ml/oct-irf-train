@@ -162,6 +162,6 @@ prepdata.packdata.packdata(csvfile)
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 from deeplearning.train import train
-train(10)
+train(30)
 from deeplearning.render import render
 render("runs/history.txt", "runs/learning.html")
