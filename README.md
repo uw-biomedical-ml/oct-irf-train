@@ -5,9 +5,9 @@ Retrain our published IRF segmentation algorithm with your own data.
 # Installation and setup
 
 ```
-pip install -r requirements.txt
-
 git clone https://github.com/uw-biomedical-ml/oct-irf-train.git
+
+pip install -r requirements.txt
 
 ./run.py <image folder> <csv file>
 ```
