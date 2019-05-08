@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-import deeplearning.unet
 from PIL import Image
 import sys, glob, tqdm, os
 import numpy as np
@@ -17,6 +16,7 @@ def usage():
 if len(sys.argv) != 4:
     usage()
 
+import deeplearning.unet
 (_, indir, outdir, mode) = sys.argv
 
 if not os.path.isdir(indir):
@@ -56,19 +56,25 @@ my_cm = np.array(my_cm)
 for f in tqdm.tqdm(imgs):
     ji = Image.open(f)
     img = np.array(ji)
-    img = img.reshape((1, img.shape[0], img.shape[1])).astype(np.float)
+    img = img.astype(np.float)
     img -= 28.991758347
     img /= 46.875888824
 
-    totaloutput = np.zeros((img.shape[1], img.shape[2], 32))
-    for dx in tqdm.tqdm(range(0, img.shape[2] - 32)):
-        imgs = img[0, 0:image_rows, dx:image_cols+dx]
-        imgs = imgs.reshape((  1, image_rows,image_cols))
-        imgsbatch = np.zeros((1, 1, image_rows,image_cols))
-        imgsbatch[0] = imgs
+    totaloutput = np.zeros((img.shape[0], img.shape[1], 32))
+    ym = np.argmax(np.sum(img, axis=1))
+    y0 = int(ym - image_rows / 2)
+    y1 = int(ym + image_rows / 2)
+    if y0 < 0:
+      y0 = 0
+    if y1 >= img.shape[0]:
+      y1 = img.shape[0] - 1
+    for dx in tqdm.tqdm(range(0, img.shape[1] - 32)):
+	sliori = np.zeros((image_rows, image_cols), dtype="uint8")
+	sliori[0:y1-y0, :]  = img[y0:y1, dx:dx+image_cols]
+        imgsbatch = sliori.reshape((1,  1, image_rows,image_cols))
 
-        output = model.predict(imgsbatch, batch_size=1) # inference step
-        totaloutput[0:image_rows,dx:dx+image_cols,dx % 32] = output[0,0,:,:]
+        output = model.predict(imgsbatch, batch_size=1)
+        totaloutput[y0:y1,dx:dx+image_cols,dx % 32] = output[0,0,0:y1-y0,:]
 
     totaloutput = np.mean(totaloutput, 2)
 
@@ -98,3 +104,5 @@ for f in tqdm.tqdm(imgs):
         j = Image.fromarray(mapped_data).convert('RGBA')
         ji = ji.convert("RGBA")
         Image.blend(ji, j,0.5).save(f.replace(indir,outdir))
+
+print("\n\nFinished.")
