@@ -69,7 +69,7 @@ for f in tqdm.tqdm(imgs):
     if y1 >= img.shape[0]:
       y1 = img.shape[0] - 1
     for dx in tqdm.tqdm(range(0, img.shape[1] - 32)):
-	sliori = np.zeros((image_rows, image_cols), dtype="uint8")
+	sliori = np.zeros((image_rows, image_cols), dtype=np.float)
 	sliori[0:y1-y0, :]  = img[y0:y1, dx:dx+image_cols]
         imgsbatch = sliori.reshape((1,  1, image_rows,image_cols))
 
